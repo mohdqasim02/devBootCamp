@@ -30,4 +30,28 @@ class RectangleTest {
 	void shouldNotCreateRectangleForSideEqualToZero() {
 		assertThrows(InvalidDimensionException.class, () -> Rectangle.create(0, 7));
 	}
+
+	@Test
+	void shouldCalculateAreaOfTheSquare() throws InvalidDimensionException {
+		Rectangle square = Rectangle.createSquare(5);
+
+		assertEquals(25, square.area());
+	}
+
+	@Test
+	void shouldCalculatePerimeterOfTheSquare() throws InvalidDimensionException {
+		Rectangle square = Rectangle.createSquare(5);
+
+		assertEquals(20, square.perimeter());
+	}
+
+	@Test
+	void shouldNotCreateSquareForSideLessThanZero() {
+		assertThrows(InvalidDimensionException.class, () -> Rectangle.createSquare(-5));
+	}
+
+	@Test
+	void shouldNotCreateSquareForSideEqualToZero() {
+		assertThrows(InvalidDimensionException.class, () -> Rectangle.createSquare(0));
+	}
 }

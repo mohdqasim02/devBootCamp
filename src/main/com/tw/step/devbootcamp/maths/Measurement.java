@@ -2,18 +2,18 @@ package com.tw.step.devbootcamp.maths;
 
 import com.tw.step.devbootcamp.maths.exceptions.InvalidLenghtException;
 
-public class Length implements Comparable<Length> {
+public class Measurement implements Comparable<Measurement> {
 	private final Unit unit;
 	private final double value;
 
-	private Length(double value, Unit unit) {
+	private Measurement(double value, Unit unit) {
 		this.unit = unit;
 		this.value = value;
 	}
 
-	public static Length of(double value, Unit unit) throws InvalidLenghtException {
+	public static Measurement of(double value, Unit unit) throws InvalidLenghtException {
 		if(value < 0) throw new InvalidLenghtException(value);
-		return new Length(value, unit);
+		return new Measurement(value, unit);
 	}
 
 	private double toStandard() {
@@ -21,7 +21,7 @@ public class Length implements Comparable<Length> {
 	}
 
 	@Override
-	public int compareTo(Length other) {
+	public int compareTo(Measurement other) {
 		return Double.compare(this.toStandard(), other.toStandard());
 	}
 }

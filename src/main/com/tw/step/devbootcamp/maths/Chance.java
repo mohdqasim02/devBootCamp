@@ -43,9 +43,6 @@ public class Chance {
 	}
 
 	public Chance or(Chance other) throws InvalidChanceException {
-//		double ratioOfThisOrOther = this.ratio + other.ratio - this.and(other).ratio;
-//		return Chance.of(ratioOfThisOrOther);
-
 		return Chance.of(this.not().and(other.not()).not().ratio);
 	}
 }

@@ -20,7 +20,7 @@ class ChanceTest {
 	@Test
 	void shouldCalculateTheChanceOfNotGettingTail() throws InvalidChanceException {
 		Chance gettingTail = Chance.of(0.5);
-		Chance notGettingTail = gettingTail.inverse();
+		Chance notGettingTail = gettingTail.not();
 
 		assertEquals(notGettingTail, gettingTail);
 	}

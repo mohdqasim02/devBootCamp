@@ -16,7 +16,7 @@ public class Chance {
 		return new Chance(ratio);
 	}
 
-	public Chance inverse() throws InvalidChanceException {
+	public Chance not() throws InvalidChanceException {
 		return Chance.of(1 - this.ratio);
 	}
 
@@ -43,7 +43,9 @@ public class Chance {
 	}
 
 	public Chance or(Chance other) throws InvalidChanceException {
-		double ratioOfThisOrOther = this.ratio + other.ratio - this.and(other).ratio;
-		return Chance.of(ratioOfThisOrOther);
+//		double ratioOfThisOrOther = this.ratio + other.ratio - this.and(other).ratio;
+//		return Chance.of(ratioOfThisOrOther);
+
+		return Chance.of(this.not().and(other.not()).not().ratio);
 	}
 }

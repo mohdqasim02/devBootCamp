@@ -46,23 +46,16 @@ public class Measurement{
 		return Objects.hash(this.unit, this.value);
 	}
 
-	private Measurement add(Measurement other, Unit standard) throws InvalidLenghtException, IncompatibleUnitException {
+	public Measurement add(Measurement other) throws IncompatibleUnitException {
 		if(!this.unit.isOfSameType(other.unit)) {
 			throw new IncompatibleUnitException(this.unit, other.unit);
 		}
 
-		return Measurement.of(this.roundUpToThreeDecimal(this.toStandard() + other.toStandard()), standard);
+		double newValue = this.roundUpToThreeDecimal(this.toStandard() + other.toStandard());
+		return new Measurement(newValue, this.unit.getStandardUnit());
 	}
 
 	private double roundUpToThreeDecimal(double number) {
 		return (double) Math.round(number * 1000) / 1000.0;
-	}
-
-	public Measurement addLength(Measurement other) throws IncompatibleUnitException, InvalidLenghtException {
-		return this.add(other, Unit.INCH);
-	}
-
-	public Measurement addVolume(Measurement other) throws IncompatibleUnitException, InvalidLenghtException {
-		return this.add(other, Unit.LITER);
 	}
 }

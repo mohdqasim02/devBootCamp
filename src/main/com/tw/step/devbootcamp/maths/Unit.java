@@ -27,4 +27,10 @@ public enum Unit {
 	boolean isOfSameType(Unit other) {
 		return this.type == other.type;
 	}
+
+
+	public Unit getStandardUnit() {
+		System.out.println(this.type.getStandard());
+		return this.type.getStandard();
+	}
 }

@@ -13,35 +13,35 @@ class MeasurementTest {
 	}
 
 	@Test
-	void shouldCompareFeetAndInches() throws InvalidLenghtException {
+	void shouldCompareFeetAndInches() throws InvalidLenghtException, IncompatibleUnitException {
 		Measurement _1Feet = Measurement.of(1, Unit.FEET);
 		Measurement _12Inch = Measurement.of(12, Unit.INCH);
 
-		assertEquals(0, _1Feet.compareTo(_12Inch));
+		assertEquals(0, _1Feet.compare(_12Inch));
 	}
 
 	@Test
-	void shouldCompareInchesAndCentimeter() throws InvalidLenghtException {
+	void shouldCompareInchesAndCentimeter() throws InvalidLenghtException, IncompatibleUnitException {
 		Measurement fiveCentiMeter = Measurement.of(5, Unit.CM);
 		Measurement twoInches = Measurement.of(2, Unit.INCH);
 
-		assertEquals(-1, fiveCentiMeter.compareTo(twoInches));
+		assertEquals(-1, fiveCentiMeter.compare(twoInches));
 	}
 
 	@Test
-	void shouldCompareCentimeterAndMillimeter() throws InvalidLenghtException {
+	void shouldCompareCentimeterAndMillimeter() throws InvalidLenghtException, IncompatibleUnitException {
 		Measurement oneCentiMeter = Measurement.of(1, Unit.CM);
 		Measurement tenMilliMeter = Measurement.of(10, Unit.MM);
 
-		assertEquals(0, oneCentiMeter.compareTo(tenMilliMeter));
+		assertEquals(0, oneCentiMeter.compare(tenMilliMeter));
 	}
 
 	@Test
-	void shouldCompareVolumesInLitersAndGallons() throws InvalidLenghtException {
+	void shouldCompareVolumesInLitersAndGallons() throws InvalidLenghtException, IncompatibleUnitException {
 		Measurement oneGallon = Measurement.of(1, Unit.GALLON);
 		Measurement fourLiters = Measurement.of(4, Unit.LITER);
 
-		assertEquals(-1, oneGallon.compareTo(fourLiters));
+		assertEquals(-1, oneGallon.compare(fourLiters));
 	}
 
 	@Test
@@ -64,7 +64,7 @@ class MeasurementTest {
 		Measurement oneLiter = Measurement.of(1, Unit.LITER);
 		Measurement oneGallon = Measurement.of(1, Unit.GALLON);
 
-		assertEquals(Measurement.of(4.779999999999999, Unit.LITER), oneLiter.addVolume(oneGallon));
+		assertEquals(Measurement.of(4.78, Unit.LITER), oneLiter.addVolume(oneGallon));
 	}
 
 	@Test
@@ -73,5 +73,29 @@ class MeasurementTest {
 		Measurement twoLiters = Measurement.of(2, Unit.LITER);
 
 		assertThrows(IncompatibleUnitException.class, () -> twoInch.addLength(twoLiters));
+	}
+
+	@Test
+	void shouldNotCompareMeasurementOfTwoDifferentUnits() throws InvalidLenghtException {
+		Measurement twoInch = Measurement.of(2, Unit.INCH);
+		Measurement twoLiters = Measurement.of(2, Unit.LITER);
+
+		assertThrows(IncompatibleUnitException.class, () -> twoInch.compare(twoLiters));
+	}
+
+	@Test
+	void shouldCompareTemperatureInCelsiusAndFahrenheit() throws IncompatibleUnitException, InvalidLenghtException {
+		Measurement twoOnetwoFahrenheit = Measurement.of(212, Unit.FAHRENHEIT);
+		Measurement hundredCelsius = Measurement.of(100, Unit.CELSIUS);
+
+		assertEquals(0, twoOnetwoFahrenheit.compare(hundredCelsius));
+	}
+
+	@Test
+	void shouldCompareTemperatureInFahrenheit() throws IncompatibleUnitException, InvalidLenghtException {
+		Measurement _212Fahrenheit = Measurement.of(212, Unit.FAHRENHEIT);
+		Measurement hundredFahrenheit = Measurement.of(100, Unit.FAHRENHEIT);
+
+		assertEquals(1, _212Fahrenheit.compare(hundredFahrenheit));
 	}
 }

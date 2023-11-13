@@ -1,25 +1,27 @@
 package com.tw.step.devbootcamp.maths;
 
-import java.util.HashSet;
-
 public enum Unit {
-	FEET (12, UnitType.LENGTH),
-	INCH (1, UnitType.LENGTH),
-	CM (0.39, UnitType.LENGTH),
-	MM (0.039, UnitType.LENGTH),
-	GALLON(3.78, UnitType.VOLUME),
-	LITER(1, UnitType.VOLUME);
+	FEET(12.0, 0.0, UnitType.LENGTH),
+	INCH(1.0, 0.0, UnitType.LENGTH),
+	CM(0.39, 0.0, UnitType.LENGTH),
+	MM(0.039, 0.0, UnitType.LENGTH),
+	GALLON(3.78, 0.0, UnitType.VOLUME),
+	LITER(1.0, 0.0, UnitType.VOLUME),
+	CELSIUS(1.8, 32.0, UnitType.TEMPERATURE),
+	FAHRENHEIT(1.0,0.0, UnitType.TEMPERATURE);
 
-	private final double conversionFactor;
 	private final UnitType type;
+	private final double gradient;
+	private final double intercept;
 
-	Unit(double conversionFactor, UnitType type) {
+	Unit(Double gradient, Double intercept, UnitType type) {
 		this.type = type;
-		this.conversionFactor = conversionFactor;
+		this.gradient = gradient;
+		this.intercept = intercept;
 	}
 
 	public double toStandard(double value) {
-		return this.conversionFactor * value;
+		return value * this.gradient + this.intercept;
 	}
 
 	boolean isOfSameType(Unit other) {

@@ -5,7 +5,7 @@ import com.tw.step.devbootcamp.maths.exceptions.InvalidLenghtException;
 
 import java.util.Objects;
 
-public class Measurement implements Comparable<Measurement> {
+public class Measurement{
 	private final Unit unit;
 	private final double value;
 
@@ -23,8 +23,8 @@ public class Measurement implements Comparable<Measurement> {
 		return this.unit.toStandard(this.value);
 	}
 
-	@Override
-	public int compareTo(Measurement other) {
+	public int compare(Measurement other) throws IncompatibleUnitException {
+		if(!this.unit.isOfSameType(other.unit)) throw new IncompatibleUnitException(this.unit, other.unit);
 		return Double.compare(this.toStandard(), other.toStandard());
 	}
 
@@ -51,7 +51,11 @@ public class Measurement implements Comparable<Measurement> {
 			throw new IncompatibleUnitException(this.unit, other.unit);
 		}
 
-		return Measurement.of(this.toStandard() + other.toStandard(), standard);
+		return Measurement.of(this.roundUpToThreeDecimal(this.toStandard() + other.toStandard()), standard);
+	}
+
+	private double roundUpToThreeDecimal(double number) {
+		return (double) Math.round(number * 1000) / 1000.0;
 	}
 
 	public Measurement addLength(Measurement other) throws IncompatibleUnitException, InvalidLenghtException {
